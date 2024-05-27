@@ -1,5 +1,6 @@
 import React from 'react';
 import {TaskProps} from "./App";
+import {Button} from "./Button";
 
 type TodolistProps = {
     title: string
@@ -13,22 +14,22 @@ export const Todolist = ({title, tasks, data}: TodolistProps) => {
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button title={'+'} />
             </div>
-            <ul>
+            {tasks.length === 0 ? (
+                <p>Тасок нет</p>
+            ) : <ul>
                 {tasks.map(task => {
-                    debugger
                     return <li key={task.id}><input type="checkbox" checked={true}/><span>{task.title}</span></li>
                 })
                 }
-                {/* <li><input type="checkbox" checked={true}/> <span>{tasks[0].title}</span></li>*/}
-                {/*<li><input type="checkbox" checked={true}/> <span>{tasks[1].title}</span></li>*/}
-                {/*<li><input type="checkbox" checked={false}/> <span>{tasks[2].title}</span></li>*/}
             </ul>
+            }
+
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button title={'All'} />
+                <Button title={'Active'} />
+                <Button title={'Completed'} />
             </div>
             <div>{data}</div>
         </div>
