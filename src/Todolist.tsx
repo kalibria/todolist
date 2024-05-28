@@ -2,6 +2,7 @@ import React from 'react';
 import {FilterValuesType, TaskProps} from "./App";
 import {Button} from "./Button";
 import styles from "./Todolist.module.css";
+import {TaskAddition} from "./taskAddition/TaskAddition";
 
 type TodolistProps = {
     title: string
@@ -15,10 +16,8 @@ export const Todolist = ({title, tasks, data, removeTask, changeFilter}: Todolis
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
-            <div>
-                <input/>
-                <Button title={'+'}/>
-            </div>
+            <TaskAddition />
+
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : <ul>
