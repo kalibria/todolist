@@ -9,6 +9,8 @@ export type TaskProps = {
     isDone: boolean
 }
 
+export type FilterValuesType = 'all' | 'active' | 'completed'
+
 function App() {
     let tasks1 = [
         { id: 1, title: 'HTML&CSS', isDone: true },
@@ -21,23 +23,33 @@ function App() {
 
     const [tasks, setTasks] = useState<TaskProps[]>(tasks1)
 
+
     const removeTask = (id: number) => {
-        const filteredTasks =  tasks1.filter((task) => task.id !== id);
+        const filteredTasks =  tasks.filter((task) => task.id !== id);
         console.log(filteredTasks);
         setTasks(filteredTasks)
     }
 
-    // const tasks2 = [
-    //     { id: 1, title: 'Hello world', isDone: true },
-    //     { id: 2, title: 'I am Happy', isDone: false },
-    //     { id: 3, title: 'Yo', isDone: false },
-    // ]
+    const [filter, setFilter] = useState<FilterValuesType>('completed');
+
+    let tasksForToDoList = tasks1;
+
+    if (filter === 'active') {
+        tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
+    }
+
+    if (filter === 'completed'){
+
+        tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
+        console.log(tasksForToDoList)
+    }
+
+    const changeFilter = (filter:FilterValuesType) => {setFilter(filter)}
+
 
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}/>
-            {/*<Todolist title={'Songs'} tasks={tasks2}/>*/}
-
+            <Todolist title={'What to learn'} tasks={tasksForToDoList} data={'27.05.2024'} removeTask={removeTask} changeFilter={changeFilter}/>
         </div>
     );
 }

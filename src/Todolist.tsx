@@ -1,5 +1,5 @@
 import React from 'react';
-import {TaskProps} from "./App";
+import {FilterValuesType, TaskProps} from "./App";
 import {Button} from "./Button";
 import styles from "./Todolist.module.css";
 
@@ -7,10 +7,11 @@ type TodolistProps = {
     title: string
     tasks: TaskProps[]
     data?: string
-    removeTask:(id: number) => void;
+    removeTask:(id: number) => void
+    changeFilter: (filterValues: FilterValuesType) => void
 }
 
-export const Todolist = ({title, tasks, data, removeTask}: TodolistProps) => {
+export const Todolist = ({title, tasks, data, removeTask, changeFilter}: TodolistProps) => {
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
@@ -22,7 +23,7 @@ export const Todolist = ({title, tasks, data, removeTask}: TodolistProps) => {
                 <p>Тасок нет</p>
             ) : <ul>
                 {tasks.map(task => {
-                    return <li key={task.id}><input type="checkbox" checked={true}/>
+                    return <li key={task.id}><input type="checkbox" checked={task.isDone}/>
                         <span>{task.title}</span>
                         <Button title={"x"} onClick={() => removeTask(task.id)}/>
                     </li>
@@ -32,9 +33,9 @@ export const Todolist = ({title, tasks, data, removeTask}: TodolistProps) => {
             }
 
             <div>
-                <Button title={'All'}/>
-                <Button title={'Active'}/>
-                <Button title={'Completed'}/>
+                <Button title={'All'} onClick={() => changeFilter('all')}/>
+                <Button title={'Active'} onClick={() => changeFilter('active')}/>
+                <Button title={'Completed'} onClick={() => changeFilter('completed')}/>
             </div>
             <div>{data}</div>
         </div>
