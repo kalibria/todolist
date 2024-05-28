@@ -1,16 +1,18 @@
 import React from 'react';
 import {TaskProps} from "./App";
 import {Button} from "./Button";
+import styles from "./Todolist.module.css";
 
 type TodolistProps = {
     title: string
     tasks: TaskProps[]
     data?: string
+    removeTask:(id: number) => void;
 }
 
-export const Todolist = ({title, tasks, data}: TodolistProps) => {
+export const Todolist = ({title, tasks, data, removeTask}: TodolistProps) => {
     return (
-        <div>
+        <div className={styles.card}>
             <h3>{title}</h3>
             <div>
                 <input/>
@@ -22,7 +24,7 @@ export const Todolist = ({title, tasks, data}: TodolistProps) => {
                 {tasks.map(task => {
                     return <li key={task.id}><input type="checkbox" checked={true}/>
                         <span>{task.title}</span>
-                        <button>x</button>
+                        <Button title={"x"} onClick={() => removeTask(task.id)}/>
                     </li>
                 })
                 }
