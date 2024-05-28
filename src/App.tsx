@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
+import {OnOffIndicator} from "../src/onOffIndicator/OnOffIndicator";
 
 
 export type TaskProps = {
@@ -46,10 +47,23 @@ function App() {
 
     const changeFilter = (filter:FilterValuesType) => {setFilter(filter)}
 
+    const [onIsClick, setOnIsClick] = useState<boolean>(false);
+
+    const changeIndicator = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if(event.currentTarget.name === 'on'){
+            setOnIsClick(true)
+        }else {
+            setOnIsClick(false)
+        }
+    }
+
+
 
     return (
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasksForToDoList} data={'27.05.2024'} removeTask={removeTask} changeFilter={changeFilter}/>
+
+            <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>
         </div>
     );
 }

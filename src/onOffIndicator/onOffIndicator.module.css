@@ -1,0 +1,25 @@
+.button {
+    width: 50px;
+    height: 30px;
+    border: 1px solid grey;
+}
+
+.indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid grey;
+}
+
+.indicatorWrapper {
+    display: flex;
+    gap: 20px
+}
+
+.redButton {
+    background-color: red;
+}
+
+.greenButton {
+    background-color: green;
+}
