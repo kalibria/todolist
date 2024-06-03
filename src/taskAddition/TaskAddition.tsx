@@ -1,7 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
 import {FullInput} from "../components/FullInput";
 
-export const TaskAddition = () => {
+type TaskAdditionProps = {
+    addTask: ()=>void
+}
+
+export const TaskAddition = ({addTask}:TaskAdditionProps) => {
     let [message, setMessage] = useState([
         {message: 'message1'},
         {message: 'message1'},
@@ -14,6 +18,7 @@ export const TaskAddition = () => {
     }
 
     const onClickButtonHandler = () => {
+        addTask();
         setMessage([{message: title},...message ])
         setTitle('')
     }

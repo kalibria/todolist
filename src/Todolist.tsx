@@ -8,15 +8,16 @@ type TodolistProps = {
     title: string
     tasks: TaskProps[]
     data?: string
-    removeTask:(id: number) => void
+    removeTask:(id: string) => void
     changeFilter: (filterValues: FilterValuesType) => void
+    addTask: () => void
 }
 
-export const Todolist = ({title, tasks, data, removeTask, changeFilter}: TodolistProps) => {
+export const Todolist = ({title, tasks, data, removeTask, changeFilter, addTask}: TodolistProps) => {
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
-            <TaskAddition />
+            <TaskAddition addTask={addTask}/>
 
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
