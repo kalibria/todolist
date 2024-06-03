@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {OnOffIndicator} from "../src/onOffIndicator/OnOffIndicator";
@@ -15,32 +15,38 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
     let tasks1 = [
-        { id: v1(), title: 'HTML&CSS', isDone: true },
-        { id: v1(), title: 'JS', isDone: true },
-        { id: v1(), title: 'ReactJS', isDone: false },
-        { id: v1(), title: 'Redux', isDone: false },
-        { id: v1(), title: 'Typescript', isDone: false },
-        { id: v1(), title: 'RTK query', isDone: false },
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
+        {id: v1(), title: 'RTK query', isDone: false},
     ]
 
     const [tasks, setTasks] = useState<TaskProps[]>(tasks1)
 
+    let [enteredTask, setEnteredTask] = useState('');
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setEnteredTask(event.currentTarget.value)
+    }
+
 
     const removeTask = (id: string) => {
-        const filteredTasks =  tasks.filter((task) => task.id !== id);
+        const filteredTasks = tasks.filter((task) => task.id !== id);
         setTasks(filteredTasks)
     }
 
-    const addTask = () => {
-        console.log("hello")
+    const addTask = (title: string) => {
+         setEnteredTask("");
+
         const newTask = {
             id: v4(),
-            title: 'new task',
+            title: title,
             isDone: false,
         }
-        console.log("newTask", newTask)
-        const newTasks = [newTask, ...tasks1];
-        console.log("newTasks", newTasks)
+
+        const newTasks = [newTask, ...tasks];
         setTasks(newTasks)
     }
 
@@ -52,28 +58,31 @@ function App() {
         tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
     }
 
-    if (filter === 'completed'){
+    if (filter === 'completed') {
 
         tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
     }
 
-    const changeFilter = (filter:FilterValuesType) => {setFilter(filter)}
+    const changeFilter = (filter: FilterValuesType) => {
+        setFilter(filter)
+    }
 
     const [onIsClick, setOnIsClick] = useState<boolean>(false);
 
     const changeIndicator = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if(event.currentTarget.name === 'on'){
+        if (event.currentTarget.name === 'on') {
             setOnIsClick(true)
-        }else {
+        } else {
             setOnIsClick(false)
         }
     }
 
 
-
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask} changeFilter={changeFilter} addTask ={addTask}/>
+            <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}
+                      changeFilter={changeFilter} addTask={addTask} enteredTask={enteredTask}
+                      onChangeInputHandler={onChangeInputHandler}/>
 
             <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>
         </div>

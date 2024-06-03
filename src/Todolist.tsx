@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {FilterValuesType, TaskProps} from "./App";
 import {Button} from "./Button";
 import styles from "./Todolist.module.css";
-import {TaskAddition} from "./taskAddition/TaskAddition";
+import {FullInput} from "./components/FullInput";
 
 type TodolistProps = {
     title: string
@@ -10,14 +10,19 @@ type TodolistProps = {
     data?: string
     removeTask:(id: string) => void
     changeFilter: (filterValues: FilterValuesType) => void
-    addTask: () => void
+    addTask: (title:string) => void
+    enteredTask:string
+    onChangeInputHandler:(event: ChangeEvent<HTMLInputElement>)=>void
 }
 
-export const Todolist = ({title, tasks, data, removeTask, changeFilter, addTask}: TodolistProps) => {
+export const Todolist = ({title, tasks, data, removeTask, changeFilter, addTask, enteredTask,onChangeInputHandler }: TodolistProps) => {
+
+
+
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
-            <TaskAddition addTask={addTask}/>
+            <FullInput title={enteredTask} onChangeInputHandler={onChangeInputHandler} addTask={addTask}/>
 
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
