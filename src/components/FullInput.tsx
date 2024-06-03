@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Dispatch, SetStateAction} from 'react';
+import React, {ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction} from 'react';
 import {Button} from "../Button";
 
 type FullInputType = {
@@ -9,19 +9,25 @@ type FullInputType = {
 }
 
 export const FullInput = ({title, onChangeInputHandler, addTask, setTaskTitle}: FullInputType) => {
-const addTTaskHandler = ( )=> {
+const addTaskHandler = ( )=> {
     addTask(title)
     setTaskTitle("")
 }
 
+    const changeTaskTitleHandler = (event:  ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(event.currentTarget.value)
+    }
+
+    const addTaskOnKeyUpHandler = (event: any) => {
+        if (event.key === 'Enter') {
+            addTaskHandler()
+        }
+    }
+
     return (
         <div>
-            <input onChange={(event) => {setTaskTitle(event.currentTarget.value)}} value={title} onKeyUp={(event) => {
-                if(event.key === 'Enter'){
-                    addTTaskHandler()
-            }}
-            }/>
-            <Button title={'+'} onClick={addTTaskHandler}/>
+            <input onChange={changeTaskTitleHandler} value={title} onKeyUp={addTaskOnKeyUpHandler}/>
+            <Button title={'+'} onClick={addTaskHandler}/>
         </div>
     );
 };

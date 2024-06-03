@@ -8,21 +8,30 @@ type TodolistProps = {
     title: string
     tasks: TaskProps[]
     data?: string
-    removeTask:(id: string) => void
+    removeTask: (id: string) => void
     changeFilter: (filterValues: FilterValuesType) => void
-    addTask: (title:string) => void
-    enteredTask:string
-    onChangeInputHandler:(event: ChangeEvent<HTMLInputElement>)=>void
+    addTask: (title: string) => void
+    enteredTask: string
+    onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Todolist = ({title, tasks, data, removeTask, changeFilter, addTask, onChangeInputHandler }: TodolistProps) => {
-const [taskTitle, setTaskTitle] = useState('')
+export const Todolist = ({
+                             title,
+                             tasks,
+                             data,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             onChangeInputHandler
+                         }: TodolistProps) => {
+    const [taskTitle, setTaskTitle] = useState('')
 
 
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
-            <FullInput title={taskTitle} onChangeInputHandler={onChangeInputHandler} addTask={addTask} setTaskTitle={setTaskTitle}/>
+            <FullInput title={taskTitle} onChangeInputHandler={onChangeInputHandler} addTask={addTask}
+                       setTaskTitle={setTaskTitle}/>
 
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
