@@ -1,23 +1,23 @@
-import React, {ChangeEvent, ChangeEventHandler, useRef, useState} from 'react';
+import React, {ChangeEvent, Dispatch, SetStateAction} from 'react';
 import {Button} from "../Button";
 
 type FullInputType = {
     title: string
     onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
-    addTask: (title:string) => void
+    addTask: (title: string) => void
+    setTaskTitle:Dispatch<SetStateAction<string>>
 }
 
-export const FullInput = ({title, onChangeInputHandler, addTask}: FullInputType) => {
-    const inputRef = useRef<HTMLInputElement>(null)
+export const FullInput = ({title, onChangeInputHandler, addTask, setTaskTitle}: FullInputType) => {
+const addTTaskHandler = ( )=> {
+    addTask(title)
+    setTaskTitle("")
+}
 
     return (
         <div>
-            <input onChange={onChangeInputHandler} value={title} ref={inputRef}/>
-            <Button title={'+'} onClick={() => {
-                if (inputRef.current) {
-                    addTask(inputRef.current.value);
-                }
-            }}/>
+            <input onChange={(event) => {setTaskTitle(event.currentTarget.value)}} value={title} />
+            <Button title={'+'} onClick={addTTaskHandler}/>
         </div>
     );
 };
