@@ -16,7 +16,11 @@ const addTTaskHandler = ( )=> {
 
     return (
         <div>
-            <input onChange={(event) => {setTaskTitle(event.currentTarget.value)}} value={title} />
+            <input onChange={(event) => {setTaskTitle(event.currentTarget.value)}} value={title} onKeyUp={(event) => {
+                if(event.key === 'Enter'){
+                    addTTaskHandler()
+            }}
+            }/>
             <Button title={'+'} onClick={addTTaskHandler}/>
         </div>
     );
