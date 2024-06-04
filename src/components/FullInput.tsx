@@ -24,10 +24,13 @@ const addTaskHandler = ( )=> {
         }
     }
 
+    console.log("title", title)
+    console.log("BoleanTitle", Boolean(title))
+
     return (
         <div>
             <input onChange={changeTaskTitleHandler} value={title} onKeyUp={addTaskOnKeyUpHandler}/>
-            <Button title={'+'} onClick={addTaskHandler}/>
+            <Button title={'+'} onClick={addTaskHandler} disabled={!Boolean(title.trim())}/>
         </div>
     );
 };
