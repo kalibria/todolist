@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction} from 'react';
+import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction} from 'react';
 import {Button} from "../Button";
 
 type FullInputType = {
@@ -8,7 +8,7 @@ type FullInputType = {
     setTaskTitle:Dispatch<SetStateAction<string>>
 }
 
-export const FullInput = ({title, onChangeInputHandler, addTask, setTaskTitle}: FullInputType) => {
+export const FullInput = ({title, addTask, setTaskTitle}: FullInputType) => {
 const addTaskHandler = ( )=> {
     addTask(title)
     setTaskTitle("")
@@ -18,14 +18,12 @@ const addTaskHandler = ( )=> {
         setTaskTitle(event.currentTarget.value)
     }
 
-    const addTaskOnKeyUpHandler = (event: any) => {
+    const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             addTaskHandler()
         }
     }
 
-    console.log("title", title)
-    console.log("BoleanTitle", Boolean(title))
 
     return (
         <div>
