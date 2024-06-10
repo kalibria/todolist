@@ -42,7 +42,7 @@ function App() {
 
         const newTask = {
             id: v4(),
-            title: title,
+            title: title.trim(),
             isDone: false,
         }
 
