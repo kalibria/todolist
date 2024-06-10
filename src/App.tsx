@@ -94,7 +94,7 @@ function App() {
             <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}
                       changeFilter={changeFilter} addTask={addTask} enteredTask={enteredTask}
                       onChangeInputHandler={onChangeInputHandler} changeTaskStatus={changeTaskStatus}
-            error={error} setError={setError}
+            error={error} setError={setError} filter={filter}
             />
 
             <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>

@@ -16,6 +16,7 @@ type TodolistProps = {
     changeTaskStatus: (id: string, status: boolean) => void
     error: string | null
     setError: Dispatch<React.SetStateAction<string | null>>
+    filter: FilterValuesType
 }
 
 export const Todolist = ({
@@ -28,7 +29,8 @@ export const Todolist = ({
                              onChangeInputHandler,
                              changeTaskStatus,
                              error,
-    setError
+                             setError,
+                             filter
                          }: TodolistProps) => {
     const [taskTitle, setTaskTitle] = useState('');
 
@@ -48,7 +50,7 @@ export const Todolist = ({
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked)
                     }
-                    return <li key={task.id}><input type="checkbox" checked={task.isDone}
+                    return <li key={task.id} className={task.isDone ? 'is-done' : ''}><input type="checkbox" checked={task.isDone}
                                                     onChange={e => changeTaskStatusHandler(e, task.id)}/>
                         <span>{task.title}</span>
                         <Button title={"x"} onClick={() => removeTask(task.id)}/>
@@ -59,9 +61,9 @@ export const Todolist = ({
             }
 
             <div>
-                <Button title={'All'} onClick={() => changeFilter('all')}/>
-                <Button title={'Active'} onClick={() => changeFilter('active')}/>
-                <Button title={'Completed'} onClick={() => changeFilter('completed')}/>
+                <Button title={'All'} onClick={() => changeFilter('all')} className={filter === "all" ? 'active-filter' : ''}/>
+                <Button title={'Active'} onClick={() => changeFilter('active')} className={filter === "active" ? 'active-filter' : ''}/>
+                <Button title={'Completed'} onClick={() => changeFilter('completed')} className={filter === "completed" ? 'active-filter' : ''}/>
             </div>
             <div>{data}</div>
         </div>
