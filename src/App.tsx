@@ -77,12 +77,21 @@ function App() {
         }
     }
 
+    const changeTaskStatus = (id: string, status: boolean) =>{
+        const task = tasks.find((task) => task.id === id);
+        if(task){
+            task.isDone = status;
+            setTasks([...tasks])
+        }
+
+    }
+
 
     return (
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}
                       changeFilter={changeFilter} addTask={addTask} enteredTask={enteredTask}
-                      onChangeInputHandler={onChangeInputHandler}/>
+                      onChangeInputHandler={onChangeInputHandler} changeTaskStatus={changeTaskStatus}/>
 
             <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>
         </div>
