@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, Dispatch, useState} from 'react';
 import {FilterValuesType, TaskProps} from "./App";
 import {Button} from "./Button";
 import styles from "./Todolist.module.css";
@@ -14,6 +14,8 @@ type TodolistProps = {
     enteredTask: string
     onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
     changeTaskStatus: (id: string, status: boolean) => void
+    error: string | null
+    setError: Dispatch<React.SetStateAction<string | null>>
 }
 
 export const Todolist = ({
@@ -24,26 +26,30 @@ export const Todolist = ({
                              changeFilter,
                              addTask,
                              onChangeInputHandler,
-                             changeTaskStatus
+                             changeTaskStatus,
+                             error,
+    setError
                          }: TodolistProps) => {
-    const [taskTitle, setTaskTitle] = useState('')
-
+    const [taskTitle, setTaskTitle] = useState('');
 
 
     return (
         <div className={styles.card}>
             <h3>{title}</h3>
             <FullInput title={taskTitle} onChangeInputHandler={onChangeInputHandler} addTask={addTask}
-                       setTaskTitle={setTaskTitle}/>
+                       setTaskTitle={setTaskTitle}
+                       error={error} setError={setError}
+            />
 
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : <ul>
                 {tasks.map(task => {
-                    const changeTaskStatusHandler =(e: ChangeEvent<HTMLInputElement>, id: string) =>{
+                    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked)
                     }
-                    return <li key={task.id}><input type="checkbox" checked={task.isDone} onChange={e => changeTaskStatusHandler(e, task.id)}/>
+                    return <li key={task.id}><input type="checkbox" checked={task.isDone}
+                                                    onChange={e => changeTaskStatusHandler(e, task.id)}/>
                         <span>{task.title}</span>
                         <Button title={"x"} onClick={() => removeTask(task.id)}/>
                     </li>

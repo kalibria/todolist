@@ -27,6 +27,8 @@ function App() {
 
     let [enteredTask, setEnteredTask] = useState('');
 
+    const [error, setError] = useState<string | null>(null);
+
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setEnteredTask(event.currentTarget.value)
     }
@@ -38,16 +40,19 @@ function App() {
     }
 
     const addTask = (title: string) => {
-         setEnteredTask("");
+         // setEnteredTask("");
 
-        const newTask = {
-            id: v4(),
-            title: title.trim(),
-            isDone: false,
+        if(title.trim() !== ''){
+            const newTask = {
+                id: v4(),
+                title: title.trim(),
+                isDone: false,
+            }
+            const newTasks = [newTask, ...tasks];
+            setTasks(newTasks)
+        }else {
+            setError('Title is required')
         }
-
-        const newTasks = [newTask, ...tasks];
-        setTasks(newTasks)
     }
 
     const [filter, setFilter] = useState<FilterValuesType>('completed');
@@ -88,7 +93,9 @@ function App() {
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}
                       changeFilter={changeFilter} addTask={addTask} enteredTask={enteredTask}
-                      onChangeInputHandler={onChangeInputHandler} changeTaskStatus={changeTaskStatus}/>
+                      onChangeInputHandler={onChangeInputHandler} changeTaskStatus={changeTaskStatus}
+            error={error} setError={setError}
+            />
 
             <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>
         </div>
