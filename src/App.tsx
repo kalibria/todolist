@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {OnOffIndicator} from "../src/onOffIndicator/OnOffIndicator";
@@ -9,6 +9,12 @@ export type TaskProps = {
     id: string
     title: string
     isDone: boolean
+}
+
+export type TodoListProps = {
+    id: string
+    title: string
+    filter: FilterValuesType
 }
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -22,6 +28,11 @@ function App() {
         {id: v1(), title: 'Typescript', isDone: false},
         {id: v1(), title: 'RTK query', isDone: false},
     ]
+
+    let [todoList, setTodoList] = useState<TodoListProps[]>([
+        {id: v1(), title: 'What to learn', filter: 'all'},
+        {id: v1(), title: 'What to buy', filter: 'all'},
+    ])
 
     const [tasks, setTasks] = useState<TaskProps[]>(tasks1)
 
@@ -55,21 +66,12 @@ function App() {
         }
     }
 
-    const [filter, setFilter] = useState<FilterValuesType>('completed');
+    // const [filter, setFilter] = useState<FilterValuesType>('completed');
 
-    let tasksForToDoList = tasks1;
-
-    if (filter === 'active') {
-        tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
-    }
-
-    if (filter === 'completed') {
-
-        tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
-    }
-
-    const changeFilter = (filter: FilterValuesType) => {
-        setFilter(filter)
+    const changeFilter = (filter: FilterValuesType, todoListId: string) => {
+        setTodoList(todoList.map(tl => {
+            return tl.id === todoListId ? {...tl, filter} : tl
+        }))
     }
 
     const [onIsClick, setOnIsClick] = useState<boolean>(false);
@@ -91,11 +93,36 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasks} data={'27.05.2024'} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask} enteredTask={enteredTask}
-                      onChangeInputHandler={onChangeInputHandler} changeTaskStatus={changeTaskStatus}
-            error={error} setError={setError} filter={filter}
-            />
+            {todoList.map(t => {
+                    let tasksForToDoList = tasks;
+
+                    if (t.filter === 'active') {
+                        tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
+                    }
+
+                    if (t.filter === 'completed') {
+
+                        tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
+                    }
+                    return <Todolist
+                    key = {t.id}
+                    title = {t.title}
+                    tasks = {tasksForToDoList}
+                    data = {'27.05.2024'}
+                    removeTask = {removeTask}
+                    changeFilter = {changeFilter}
+                    addTask = {addTask}
+                    enteredTask = {enteredTask}
+                    onChangeInputHandler = {onChangeInputHandler}
+                    changeTaskStatus = {changeTaskStatus}
+                    error = {error}
+                    setError = {setError}
+                    filter = {t.filter}
+                    todoListId = {t.id}
+                    />
+                }
+            )}
+
 
             <OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>
         </div>

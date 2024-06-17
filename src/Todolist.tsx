@@ -9,7 +9,7 @@ type TodolistProps = {
     tasks: TaskProps[]
     data?: string
     removeTask: (id: string) => void
-    changeFilter: (filterValues: FilterValuesType) => void
+    changeFilter: (filterValues: FilterValuesType, todoListId: string) => void
     addTask: (title: string) => void
     enteredTask: string
     onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
@@ -17,7 +17,9 @@ type TodolistProps = {
     error: string | null
     setError: Dispatch<React.SetStateAction<string | null>>
     filter: FilterValuesType
+    todoListId: string
 }
+
 
 export const Todolist = ({
                              title,
@@ -30,7 +32,8 @@ export const Todolist = ({
                              changeTaskStatus,
                              error,
                              setError,
-                             filter
+                             filter,
+                             todoListId
                          }: TodolistProps) => {
     const [taskTitle, setTaskTitle] = useState('');
 
@@ -50,8 +53,9 @@ export const Todolist = ({
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked)
                     }
-                    return <li key={task.id} className={task.isDone ? 'is-done' : ''}><input type="checkbox" checked={task.isDone}
-                                                    onChange={e => changeTaskStatusHandler(e, task.id)}/>
+                    return <li key={task.id} className={task.isDone ? 'is-done' : ''}><input type="checkbox"
+                                                                                             checked={task.isDone}
+                                                                                             onChange={e => changeTaskStatusHandler(e, task.id)}/>
                         <span>{task.title}</span>
                         <Button title={"x"} onClick={() => removeTask(task.id)}/>
                     </li>
@@ -61,9 +65,12 @@ export const Todolist = ({
             }
 
             <div>
-                <Button title={'All'} onClick={() => changeFilter('all')} className={filter === "all" ? 'active-filter' : ''}/>
-                <Button title={'Active'} onClick={() => changeFilter('active')} className={filter === "active" ? 'active-filter' : ''}/>
-                <Button title={'Completed'} onClick={() => changeFilter('completed')} className={filter === "completed" ? 'active-filter' : ''}/>
+                <Button title={'All'} onClick={() => changeFilter('all', todoListId)}
+                        className={filter === "all" ? 'active-filter' : ''}/>
+                <Button title={'Active'} onClick={() => changeFilter('active', todoListId)}
+                        className={filter === "active" ? 'active-filter' : ''}/>
+                <Button title={'Completed'} onClick={() => changeFilter('completed', todoListId)}
+                        className={filter === "completed" ? 'active-filter' : ''}/>
             </div>
             <div>{data}</div>
         </div>
