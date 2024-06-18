@@ -1,12 +1,12 @@
 import React, {ChangeEvent, Dispatch, useState} from 'react';
-import {FilterValuesType, TaskProps} from "./App";
+import {FilterValuesType, TaskProps, TasksType, TodoListProps} from "./App";
 import {Button} from "./Button";
 import styles from "./Todolist.module.css";
 import {FullInput} from "./components/FullInput";
 
 type TodolistProps = {
     title: string
-    tasks: TaskProps[]
+    tasks: TasksType
     data?: string
     removeTask: (taskId: string, todoList: string) => void
     changeFilter: (filterValues: FilterValuesType, todoListId: string) => void
@@ -18,7 +18,8 @@ type TodolistProps = {
     setError: Dispatch<React.SetStateAction<string | null>>
     filter: FilterValuesType
     todoListId: string
-    deleteTodoList: (todoListId:string) => void
+    deleteTodoList: (todoListId: string) => void
+    todoList: TodoListProps
 }
 
 
@@ -35,9 +36,8 @@ export const Todolist = ({
                              setError,
                              filter,
                              todoListId,
-                             deleteTodoList
-
-
+                             deleteTodoList,
+                             todoList
                          }: TodolistProps) => {
     const [taskTitle, setTaskTitle] = useState('');
 
@@ -45,26 +45,20 @@ export const Todolist = ({
         deleteTodoList(todoListId)
     }
 
+    let tasksForToDoList = tasks[todoListId];
 
-    // TODO
-    // const allTodoListTasks = tasks[t.id];
-    // console.log("allTodoListTasks", tasks)
-    // console.log("t/id", tasks[t.id])
-    // let tasksForToDoList = allTodoListTasks;
-    //
-    // if (t.filter === 'active') {
-    //     tasksForToDoList = tasksForToDoList.filter((task) => !task.isDone)
-    // }
-    //
-    // if (t.filter === 'completed') {
-    //
-    //     tasksForToDoList = tasksForToDoList.filter((task) => task.isDone)
-    // }
+    if (todoList.filter === 'active') {
+        tasksForToDoList = tasks[todoListId].filter((task) => !task.isDone)
+    }
+
+    if (todoList.filter === 'completed') {
+        tasksForToDoList = tasks[todoListId].filter((task) => task.isDone)
+    }
 
     return (
         <div className={styles.card}>
             <h3>{title}
-            <Button title={'X'} onClick={onClickHandler}/>
+                <Button title={'X'} onClick={onClickHandler}/>
             </h3>
             <FullInput
                 title={taskTitle}
@@ -76,10 +70,10 @@ export const Todolist = ({
                 todoListId={todoListId}
             />
 
-            {tasks.length === 0 ? (
+            {tasks[todoListId].length === 0 ? (
                 <p>Тасок нет</p>
             ) : <ul>
-                {tasks.map(task => {
+                {tasksForToDoList.map(task => {
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked, todoListId)
                     }

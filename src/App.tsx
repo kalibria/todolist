@@ -19,7 +19,7 @@ export type TodoListProps = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type TasksType = {
+export type TasksType = {
     [key:string]: TaskProps[]
 }
 
@@ -111,20 +111,12 @@ function App() {
     return (
         <div className="App">
             {todoList.map(t => {
-                    let tasksForToDoList = tasks[t.id];
-
-                    if (t.filter === 'active') {
-                        tasksForToDoList = tasks[t.id].filter((task) => !task.isDone)
-                    }
-
-                    if (t.filter === 'completed') {
-                        tasksForToDoList = tasks[t.id].filter((task) => task.isDone)
-                    }
 
                     return <Todolist
                         key={t.id}
                         title={t.title}
-                        tasks={tasksForToDoList}
+                        tasks={tasks}
+                        todoList={t}
                         data={'27.05.2024'}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
