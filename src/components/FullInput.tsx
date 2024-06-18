@@ -1,24 +1,26 @@
-import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction} from 'react';
 import {Button} from "../Button";
 
 type FullInputType = {
     title: string
     onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
-    addTask: (title: string) => void
+    addTask: (title: string, todoListId: string) => void
     setTaskTitle: Dispatch<SetStateAction<string>>
     error: string | null
     setError: Dispatch<SetStateAction<string | null>>
+    todoListId: string
 }
 
 export const FullInput = ({
                               title, addTask, setTaskTitle,
                               error,
-    setError
+                              setError,
+                              todoListId
                           }: FullInputType) => {
 
 
     const addTaskHandler = () => {
-        addTask(title);
+        addTask(title, todoListId);
         setTaskTitle("")
     }
 
@@ -38,9 +40,9 @@ export const FullInput = ({
         <div>
 
             <input onChange={changeTaskTitleHandler} value={title} onKeyUp={addTaskOnKeyUpHandler}
-                   className={error ? 'error' : ''}/>
+                    className={error ? 'error' : ''}/>
             <Button title={'+'} onClick={addTaskHandler}
-                disabled={error ? true : false}
+                    disabled={!!error}
             />
             {error && <div className={'error-message'}>{error}</div>}
         </div>
