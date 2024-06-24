@@ -3,7 +3,7 @@ import './App.css';
 import {OnOffIndicator} from "../src/onOffIndicator/OnOffIndicator";
 import {v1, v4} from 'uuid';
 import {Todolist} from "./components/todoList/Todolist";
-
+import {AddItemForm} from "./components/addItemForm/AddItemForm";
 
 
 export type TaskProps = {
@@ -21,13 +21,12 @@ export type TodoListProps = {
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export type TasksType = {
-    [key:string]: TaskProps[]
+    [key: string]: TaskProps[]
 }
 
 function App() {
     const todoListID1 = v1();
     const todoListID2 = v1();
-
 
     let [todoList, setTodoList] = useState<TodoListProps[]>([
         {id: todoListID1, title: 'What to learn', filter: 'all'},
@@ -51,13 +50,6 @@ function App() {
 
     let [enteredTask, setEnteredTask] = useState('');
 
-    const [error, setError] = useState<string | null>(null);
-
-    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setEnteredTask(event.currentTarget.value)
-    }
-
-
     const removeTask = (taskId: string, todoListId: string) => {
         const newTodolistTasks = {
             ...tasks,
@@ -74,9 +66,8 @@ function App() {
                 isDone: false,
             }
             setTasks({...tasks, [todoListId]: [newTask, ...tasks[todoListId]]})
-        } else {
-            setError('Title is required')
         }
+
     }
 
     const changeFilter = (filter: FilterValuesType, todoListId: string) => {
@@ -105,14 +96,25 @@ function App() {
     const removeTodoList = (todoListId: string) => {
         setTodoList(todoList.filter(t => t.id !== todoListId));
         delete tasks[todoListId];
-        console.log(tasks)
+
+    }
+
+    const addTodoList = (title: string) => {
+        const newId = v1();
+        setTodoList([{
+            id: newId,
+            title: title,
+            filter: 'all',
+        }, ...todoList])
+        setTasks({[newId]: [], ...tasks})
     }
 
 
     return (
         <div className="App">
+            <AddItemForm addItem={addTodoList}
+            />
             {todoList.map(t => {
-
                     return <Todolist
                         key={t.id}
                         title={t.title}
@@ -123,10 +125,7 @@ function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         enteredTask={enteredTask}
-                        onChangeInputHandler={onChangeInputHandler}
                         changeTaskStatus={changeTaskStatus}
-                        error={error}
-                        setError={setError}
                         filter={t.filter}
                         todoListId={t.id}
                         deleteTodoList={removeTodoList}

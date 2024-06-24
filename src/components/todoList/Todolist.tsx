@@ -2,7 +2,7 @@ import React, {ChangeEvent, Dispatch, useState} from 'react';
 import styles from "./Todolist.module.css";
 import {FilterValuesType, TasksType, TodoListProps} from "../../App";
 import {Button} from "../button/Button";
-import {FullInput} from "../fullInput/FullInput";
+import {AddItemForm} from "../addItemForm/AddItemForm";
 
 
 
@@ -16,10 +16,7 @@ type TodolistProps = {
     changeFilter: (filterValues: FilterValuesType, todoListId: string) => void
     addTask: (title: string, todoListId: string) => void
     enteredTask: string
-    onChangeInputHandler: (event: ChangeEvent<HTMLInputElement>) => void
     changeTaskStatus: (taskId: string, status: boolean, todoListId: string) => void
-    error: string | null
-    setError: Dispatch<React.SetStateAction<string | null>>
     filter: FilterValuesType
     todoListId: string
     deleteTodoList: (todoListId: string) => void
@@ -34,16 +31,13 @@ export const Todolist = ({
                              removeTask,
                              changeFilter,
                              addTask,
-                             onChangeInputHandler,
                              changeTaskStatus,
-                             error,
-                             setError,
                              filter,
                              todoListId,
                              deleteTodoList,
                              todoList
                          }: TodolistProps) => {
-    const [taskTitle, setTaskTitle] = useState('');
+
 
     const onClickHandler = () => {
         deleteTodoList(todoListId)
@@ -59,19 +53,17 @@ export const Todolist = ({
         tasksForToDoList = tasks[todoListId].filter((task) => task.isDone)
     }
 
+    const addTaskHandler = (title: string) => {
+        addTask(title, todoListId)
+    }
+
     return (
         <div className={styles.card}>
             <h3>{title}
                 <Button title={'X'} onClick={onClickHandler}/>
             </h3>
-            <FullInput
-                title={taskTitle}
-                onChangeInputHandler={onChangeInputHandler}
-                addTask={addTask}
-                setTaskTitle={setTaskTitle}
-                error={error}
-                setError={setError}
-                todoListId={todoListId}
+            <AddItemForm
+                addItem={addTaskHandler}
             />
 
             {tasks[todoListId].length === 0 ? (
