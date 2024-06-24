@@ -1,8 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
 import {OnOffIndicator} from "../src/onOffIndicator/OnOffIndicator";
 import {v1, v4} from 'uuid';
+import {Todolist} from "./components/todoList/Todolist";
+
 
 
 export type TaskProps = {

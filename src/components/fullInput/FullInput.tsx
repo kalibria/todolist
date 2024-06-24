@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction} from 'react';
-import {Button} from "../Button";
+import {Button} from "../button/Button";
+
+
 
 type FullInputType = {
     title: string

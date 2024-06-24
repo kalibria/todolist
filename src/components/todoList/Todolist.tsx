@@ -1,8 +1,12 @@
 import React, {ChangeEvent, Dispatch, useState} from 'react';
-import {FilterValuesType, TaskProps, TasksType, TodoListProps} from "./App";
-import {Button} from "./Button";
 import styles from "./Todolist.module.css";
-import {FullInput} from "./components/FullInput";
+import {FilterValuesType, TasksType, TodoListProps} from "../../App";
+import {Button} from "../button/Button";
+import {FullInput} from "../fullInput/FullInput";
+
+
+
+
 
 type TodolistProps = {
     title: string
