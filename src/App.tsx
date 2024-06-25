@@ -114,6 +114,10 @@ const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) =
         [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, title: newTitle} : el)
     })
 }
+
+const changeTodoListTitle =(todoListId: string, newTitle: string) => {
+   setTodoList(todoList.map(todoList => todoList.id === todoListId ? {...todoList, title: newTitle} : todoList))
+}
     return (
         <div className="App">
             <AddItemForm addItem={addTodoList}
@@ -134,6 +138,7 @@ const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) =
                         todoListId={t.id}
                         deleteTodoList={removeTodoList}
                         changeTaskTitle={changeTaskTitle}
+                        changeTodoListTitle={changeTodoListTitle}
                     />
                 }
             )}
