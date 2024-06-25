@@ -7,8 +7,7 @@ type AddItemType = {
     addItem: (title: string) => void
 }
 
-export const AddItemForm = ({
-                               addItem
+export const AddItemForm = ({addItem
                           }: AddItemType) => {
     const [title, setTitle] = useState('');
     const [error, setError] = useState<string | null>(null);

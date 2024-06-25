@@ -3,9 +3,7 @@ import styles from "./Todolist.module.css";
 import {FilterValuesType, TasksType, TodoListProps} from "../../App";
 import {Button} from "../button/Button";
 import {AddItemForm} from "../addItemForm/AddItemForm";
-
-
-
+import {EditableSpan} from "../editableSpan/EditableSpan";
 
 
 type TodolistProps = {
@@ -21,6 +19,7 @@ type TodolistProps = {
     todoListId: string
     deleteTodoList: (todoListId: string) => void
     todoList: TodoListProps
+    changeTaskTitle:(todoListId: string, taskId: string, newTitle: string) =>void
 }
 
 
@@ -35,7 +34,8 @@ export const Todolist = ({
                              filter,
                              todoListId,
                              deleteTodoList,
-                             todoList
+                             todoList,
+                             changeTaskTitle
                          }: TodolistProps) => {
 
 
@@ -70,13 +70,16 @@ export const Todolist = ({
                 <p>Тасок нет</p>
             ) : <ul>
                 {tasksForToDoList.map(task => {
+                    const changeTaskTitleHandler = (newTitle:string) => {
+                        changeTaskTitle(todoListId, task.id, newTitle)
+                    }
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked, todoListId)
                     }
                     return <li key={task.id} className={task.isDone ? 'is-done' : ''}><input type="checkbox"
                                                                                              checked={task.isDone}
                                                                                              onChange={e => changeTaskStatusHandler(e, task.id)}/>
-                        <span>{task.title}</span>
+                        <EditableSpan oldTitle={task.title} changeItem={changeTaskTitleHandler}/>
                         <Button title={"x"} onClick={() => removeTask(task.id, todoListId)}/>
                     </li>
                 })
