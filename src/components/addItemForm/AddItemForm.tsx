@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction, useState} from 'react';
-import {Button} from "../button/Button";
+// import {Button} from "../button/Button";
+import Button from '@mui/material/Button';
 
 
 
@@ -33,9 +34,10 @@ export const AddItemForm = ({addItem
         <div>
             <input onChange={changeTaskTitleHandler} value={title} onKeyUp={addTaskOnKeyUpHandler}
                     className={error ? 'error' : ''}/>
-            <Button title={'+'} onClick={addTaskHandler}
-                    disabled={!!error}
-            />
+            <Button variant="contained" size="small">+</Button>
+            {/*<Button title={'+'} onClick={addTaskHandler}*/}
+            {/*        disabled={!!error}*/}
+            {/*/>*/}
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     );

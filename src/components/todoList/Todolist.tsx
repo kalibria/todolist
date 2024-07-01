@@ -4,6 +4,8 @@ import {FilterValuesType, TasksType, TodoListProps} from "../../App";
 import {Button} from "../button/Button";
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {EditableSpan} from "../editableSpan/EditableSpan";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 type TodolistProps = {
@@ -70,7 +72,10 @@ export const Todolist = ({
     return (
         <div className={styles.card}>
             <h3> <EditableSpan oldTitle={title} changeItem={changeTodoListTitleHandler}/>
-                <Button title={'X'} onClick={onClickHandler}/>
+                <IconButton aria-label="delete" onClick={onClickHandler}>
+                    <DeleteIcon />
+                </IconButton>
+                {/*<Button title={'X'} onClick={onClickHandler}/>*/}
             </h3>
             <AddItemForm
                 addItem={addTaskHandler}
@@ -88,7 +93,10 @@ export const Todolist = ({
                                                                                              checked={task.isDone}
                                                                                              onChange={e => changeTaskStatusHandler(e, task.id)}/>
                         <EditableSpan oldTitle={task.title} changeItem={(title) => changeTaskTitleHandler(task.id, title)}/>
-                        <Button title={"x"} onClick={() => removeTask(task.id, todoListId)}/>
+                        <IconButton aria-label="delete" onClick={() => removeTask(task.id, todoListId)}>
+                            <DeleteIcon />
+                        </IconButton>
+                        {/*<Button title={"x"} onClick={() => removeTask(task.id, todoListId)}/>*/}
                     </li>
                 })
                 }
