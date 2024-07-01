@@ -1,8 +1,8 @@
 .App {
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /*padding: 30px;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
 }
 
 .App > div {
@@ -19,7 +19,7 @@
 }
 
 .active-filter {
-  background-color: lightgreen;
+  /*background-color: lightgreen;*/
 }
 
 .is-done {
