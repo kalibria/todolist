@@ -1,11 +1,12 @@
 import React, {ChangeEvent, Dispatch, useState} from 'react';
 import styles from "./Todolist.module.css";
 import {FilterValuesType, TasksType, TodoListProps} from "../../App";
-import {Button} from "../button/Button";
+// import {Button} from "../button/Button";
 import {AddItemForm} from "../addItemForm/AddItemForm";
 import {EditableSpan} from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 
 
 type TodolistProps = {
@@ -104,12 +105,16 @@ export const Todolist = ({
             }
 
             <div>
-                <Button title={'All'} onClick={() => changeFilter('all', todoListId)}
-                        className={filter === "all" ? 'active-filter' : ''}/>
-                <Button title={'Active'} onClick={() => changeFilter('active', todoListId)}
-                        className={filter === "active" ? 'active-filter' : ''}/>
-                <Button title={'Completed'} onClick={() => changeFilter('completed', todoListId)}
-                        className={filter === "completed" ? 'active-filter' : ''}/>
+
+                <Button variant={filter === "all" ? "outlined" : "contained"}  onClick={() => changeFilter('all', todoListId)} color="secondary">All</Button>
+                {/*<Button title={'All'} onClick={() => changeFilter('all', todoListId)}*/}
+                {/*        className={filter === "all" ? 'active-filter' : ''}/>*/}
+                <Button variant={filter === "active" ? "outlined" : "contained"} onClick={() => changeFilter('active', todoListId)} color="info">Active</Button>
+                {/*<Button title={'Active'} onClick={() => changeFilter('active', todoListId)}*/}
+                {/*        className={filter === "active" ? 'active-filter' : ''}/>*/}
+                <Button variant={filter === "completed" ? "outlined" : "contained"} onClick={() => changeFilter('completed', todoListId)} color="error">Completed</Button>
+                {/*<Button title={'Completed'} onClick={() => changeFilter('completed', todoListId)}*/}
+                {/*        className={filter === "completed" ? 'active-filter' : ''}/>*/}
             </div>
             <div>{data}</div>
         </div>
