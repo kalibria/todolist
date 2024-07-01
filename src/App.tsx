@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 
 export type TaskProps = {
@@ -116,18 +119,19 @@ function App() {
         setTasks({[newId]: [], ...tasks})
     };
 
-const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
-    setTasks({...tasks,
-        [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, title: newTitle} : el)
-    })
-}
+    const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
+        setTasks({
+            ...tasks,
+            [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, title: newTitle} : el)
+        })
+    }
 
-const changeTodoListTitle =(todoListId: string, newTitle: string) => {
-   setTodoList(todoList.map(todoList => todoList.id === todoListId ? {...todoList, title: newTitle} : todoList))
-}
+    const changeTodoListTitle = (todoListId: string, newTitle: string) => {
+        setTodoList(todoList.map(todoList => todoList.id === todoListId ? {...todoList, title: newTitle} : todoList))
+    }
     return (
         <div className="App">
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{flexGrow: 1}}>
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton
@@ -135,41 +139,53 @@ const changeTodoListTitle =(todoListId: string, newTitle: string) => {
                             edge="start"
                             color="inherit"
                             aria-label="menu"
-                            sx={{ mr: 2 }}
+                            sx={{mr: 2}}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
                 </AppBar>
             </Box>
-            <AddItemForm addItem={addTodoList}
-            />
-            {todoList.map(t => {
-                    return <Todolist
-                        key={t.id}
-                        title={t.title}
-                        tasks={tasks}
-                        todoList={t}
-                        data={'27.05.2024'}
-                        removeTask={removeTask}
-                        changeFilter={changeFilter}
-                        addTask={addTask}
-                        enteredTask={enteredTask}
-                        changeTaskStatus={changeTaskStatus}
-                        filter={t.filter}
-                        todoListId={t.id}
-                        deleteTodoList={removeTodoList}
-                        changeTaskTitle={changeTaskTitle}
-                        changeTodoListTitle={changeTodoListTitle}
+            <Container fixed>
+                <Grid container sx={{mt: '20px'}}>
+                    <AddItemForm addItem={addTodoList}
                     />
-                }
-            )}
+                </Grid>
+                <Grid container sx={{mt: '20px'}}>
+                    {todoList.map(t => {
 
+                            return (
+                                <Grid item sx={{mr: '30px'}}>
+                                    <Paper elevation={3}>
+                                    <Todolist
+                                        key={t.id}
+                                        title={t.title}
+                                        tasks={tasks}
+                                        todoList={t}
+                                        data={'27.05.2024'}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        addTask={addTask}
+                                        enteredTask={enteredTask}
+                                        changeTaskStatus={changeTaskStatus}
+                                        filter={t.filter}
+                                        todoListId={t.id}
+                                        deleteTodoList={removeTodoList}
+                                        changeTaskTitle={changeTaskTitle}
+                                        changeTodoListTitle={changeTodoListTitle}
+                                    />
+                                </Paper>
+                        </Grid>
+                        )
+                        }
+                    )}
+                </Grid>
 
+            </Container>
             {/*<OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>*/}
         </div>
     );
