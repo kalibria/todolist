@@ -7,6 +7,7 @@ import {EditableSpan} from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 
 
 type TodolistProps = {
@@ -90,9 +91,12 @@ export const Todolist = ({
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked, todoListId)
                     }
-                    return <li key={task.id} className={task.isDone ? 'is-done' : ''}><input type="checkbox"
-                                                                                             checked={task.isDone}
-                                                                                             onChange={e => changeTaskStatusHandler(e, task.id)}/>
+                    return <li key={task.id} className={task.isDone ? 'is-done' : ''}>
+                        <Checkbox checked={task.isDone} onChange={e => changeTaskStatusHandler(e, task.id)}/>
+
+                        {/*<input type="checkbox"*/}
+                        {/*                                                                     checked={task.isDone}*/}
+                        {/*                                                                     onChange={e => changeTaskStatusHandler(e, task.id)}/>*/}
                         <EditableSpan oldTitle={task.title} changeItem={(title) => changeTaskTitleHandler(task.id, title)}/>
                         <IconButton aria-label="delete" onClick={() => removeTask(task.id, todoListId)}>
                             <DeleteIcon />
