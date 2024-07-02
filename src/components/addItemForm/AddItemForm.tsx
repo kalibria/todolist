@@ -1,7 +1,10 @@
-import React, {ChangeEvent, KeyboardEvent, Dispatch, SetStateAction, useState} from 'react';
-// import {Button} from "../button/Button";
-import Button from '@mui/material/Button';
+import React, {ChangeEvent, KeyboardEvent, Dispatch, useState} from 'react';
+
 import TextField from '@mui/material/TextField';
+import  IconButton  from '@mui/material/IconButton';
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import Box from '@mui/material/Box';
+import {filterButtonsContainerSx} from "../../styles/TodoList.styles";
 
 
 
@@ -32,7 +35,7 @@ export const AddItemForm = ({addItem
 
 
     return (
-        <div>
+        <Box sx={filterButtonsContainerSx}>
             <TextField
                 id="outlined-multiline-static"
                 label="Enter a title"
@@ -44,14 +47,10 @@ export const AddItemForm = ({addItem
                 error={!!error}
                 helperText={error}
             />
-            {/*<input onChange={changeTaskTitleHandler} value={title} onKeyUp={addTaskOnKeyUpHandler}*/}
-            {/*        className={error ? 'error' : ''}/>*/}
-            <Button variant="contained" style={{width: '20px', height: '40px'}}>+</Button>
-            {/*<Button title={'+'} onClick={addTaskHandler}*/}
-            {/*        disabled={!!error}*/}
-            {/*/>*/}
-            {/*{error && <div className={'error-message'}>{error}</div>}*/}
-        </div>
+            <IconButton onClick={addTaskHandler} color={'primary'}>
+                <AddBoxIcon/>
+            </IconButton>
+        </Box>
     );
 };
 

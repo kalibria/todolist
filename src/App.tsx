@@ -14,6 +14,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {MenuButton} from "./components/button/MenuButton";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import Switch from '@mui/material/Switch';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 export type TaskProps = {
@@ -33,6 +37,8 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TasksType = {
     [key: string]: TaskProps[]
 }
+
+type ThemeMode = 'light' | 'dark';
 
 function App() {
     const todoListID1 = v1();
@@ -129,65 +135,98 @@ function App() {
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
         setTodoList(todoList.map(todoList => todoList.id === todoListId ? {...todoList, title: newTitle} : todoList))
     }
+
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'dark' : 'light',
+            primary: {
+                main: '#FF5733',
+                // light: will be calculated from palette.primary.main,
+                // dark: will be calculated from palette.primary.main,
+                // contrastText: will be calculated to contrast with palette.primary.main
+            },
+            // secondary: {
+            //     main: '#E0C2FF',
+            //     light: '#F5EBFF',
+            //     // dark: will be calculated from palette.secondary.main,
+            //     contrastText: '#47008F',
+            // },
+        },
+    });
+
+
+    const changeMode = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light');
+    }
     return (
+
         <div className="App">
-            <Box sx={{flexGrow: 1}}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{mr: 2}}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            News
-                        </Typography>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-            <Container fixed>
-                <Grid container sx={{mt: '20px'}}>
-                    <AddItemForm addItem={addTodoList}
-                    />
-                </Grid>
-                <Grid container sx={{mt: '20px'}}>
-                    {todoList.map(t => {
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <Box sx={{flexGrow: 1}}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{mr: 2}}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                                News
+                            </Typography>
+                            <Switch onChange={changeMode}/>
+                            <MenuButton color="inherit" background={'yellow'}>Login</MenuButton>
+                            <MenuButton color="inherit">Logout</MenuButton>
+                            <MenuButton color="inherit">Faq</MenuButton>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                <Container fixed>
+                    <Grid container sx={{mt: '20px'}}>
+                        <AddItemForm addItem={addTodoList}
+                        />
+                    </Grid>
+                    <Grid container sx={{mt: '20px'}}>
+                        {todoList.map(t => {
 
-                            return (
-                                <Grid item sx={{mr: '30px'}}>
-                                    <Paper elevation={3}>
-                                    <Todolist
-                                        key={t.id}
-                                        title={t.title}
-                                        tasks={tasks}
-                                        todoList={t}
-                                        data={'27.05.2024'}
-                                        removeTask={removeTask}
-                                        changeFilter={changeFilter}
-                                        addTask={addTask}
-                                        enteredTask={enteredTask}
-                                        changeTaskStatus={changeTaskStatus}
-                                        filter={t.filter}
-                                        todoListId={t.id}
-                                        deleteTodoList={removeTodoList}
-                                        changeTaskTitle={changeTaskTitle}
-                                        changeTodoListTitle={changeTodoListTitle}
-                                    />
-                                </Paper>
-                        </Grid>
-                        )
-                        }
-                    )}
-                </Grid>
+                                return (
+                                    <Grid item sx={{mr: '30px'}}>
+                                        <Paper elevation={3} sx={{p: '10px'}}>
+                                            <Todolist
+                                                key={t.id}
+                                                title={t.title}
+                                                tasks={tasks}
+                                                todoList={t}
+                                                data={'27.05.2024'}
+                                                removeTask={removeTask}
+                                                changeFilter={changeFilter}
+                                                addTask={addTask}
+                                                enteredTask={enteredTask}
+                                                changeTaskStatus={changeTaskStatus}
+                                                filter={t.filter}
+                                                todoListId={t.id}
+                                                deleteTodoList={removeTodoList}
+                                                changeTaskTitle={changeTaskTitle}
+                                                changeTodoListTitle={changeTodoListTitle}
+                                            />
+                                        </Paper>
+                                    </Grid>
+                                )
+                            }
+                        )}
+                    </Grid>
 
-            </Container>
-            {/*<OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>*/}
+                </Container>
+                {/*<OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>*/}
+            </ThemeProvider>
         </div>
+
     );
 }
 

@@ -1,5 +1,5 @@
 import React, {ChangeEvent, Dispatch, useState} from 'react';
-import styles from "./Todolist.module.css";
+
 import {FilterValuesType, TasksType, TodoListProps} from "../../App";
 // import {Button} from "../button/Button";
 import {AddItemForm} from "../addItemForm/AddItemForm";
@@ -10,7 +10,8 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-
+import Box from '@mui/material/Box';
+import {filterButtonsContainerSx, getListItemSx} from "../../styles/TodoList.styles";
 
 type TodolistProps = {
     title: string
@@ -74,7 +75,7 @@ export const Todolist = ({
     }
 
     return (
-        <div className={styles.card}>
+        <div>
             <h3> <EditableSpan oldTitle={title} changeItem={changeTodoListTitleHandler}/>
                 <IconButton aria-label="delete" onClick={onClickHandler}>
                     <DeleteIcon />
@@ -93,35 +94,29 @@ export const Todolist = ({
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
                         changeTaskStatus(id, e.currentTarget.checked, todoListId)
                     }
-                    return <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
+                    return <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
                         <Checkbox checked={task.isDone} onChange={e => changeTaskStatusHandler(e, task.id)}/>
 
-                        {/*<input type="checkbox"*/}
-                        {/*                                                                     checked={task.isDone}*/}
-                        {/*                                                                     onChange={e => changeTaskStatusHandler(e, task.id)}/>*/}
                         <EditableSpan oldTitle={task.title} changeItem={(title) => changeTaskTitleHandler(task.id, title)}/>
                         <IconButton aria-label="delete" onClick={() => removeTask(task.id, todoListId)}>
                             <DeleteIcon />
                         </IconButton>
-                        {/*<Button title={"x"} onClick={() => removeTask(task.id, todoListId)}/>*/}
+
                     </ListItem>
                 })
                 }
             </List>
             }
 
-            <div>
+            <Box sx={filterButtonsContainerSx}>
 
                 <Button variant={filter === "all" ? "outlined" : "contained"}  onClick={() => changeFilter('all', todoListId)} color="secondary">All</Button>
-                {/*<Button title={'All'} onClick={() => changeFilter('all', todoListId)}*/}
-                {/*        className={filter === "all" ? 'active-filter' : ''}/>*/}
+
                 <Button variant={filter === "active" ? "outlined" : "contained"} onClick={() => changeFilter('active', todoListId)} color="info">Active</Button>
-                {/*<Button title={'Active'} onClick={() => changeFilter('active', todoListId)}*/}
-                {/*        className={filter === "active" ? 'active-filter' : ''}/>*/}
+
                 <Button variant={filter === "completed" ? "outlined" : "contained"} onClick={() => changeFilter('completed', todoListId)} color="error">Completed</Button>
-                {/*<Button title={'Completed'} onClick={() => changeFilter('completed', todoListId)}*/}
-                {/*        className={filter === "completed" ? 'active-filter' : ''}/>*/}
-            </div>
+
+            </Box>
             <div>{data}</div>
         </div>
     );
