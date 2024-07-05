@@ -92,15 +92,7 @@ function App() {
         }))
     }
 
-    // const [onIsClick, setOnIsClick] = useState<boolean>(false);
-    //
-    // const changeIndicator = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     if (event.currentTarget.name === 'on') {
-    //         setOnIsClick(true)
-    //     } else {
-    //         setOnIsClick(false)
-    //     }
-    // }
+
 
     const changeTaskStatus = (taskId: string, status: boolean, todoListId: string) => {
         setTasks({
@@ -223,7 +215,7 @@ function App() {
                     </Grid>
 
                 </Container>
-                {/*<OnOffIndicator onIsClick={onIsClick} handleClick={changeIndicator}/>*/}
+
             </ThemeProvider>
         </div>
 
