@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {TodoListProps} from "../App";
 import {todoListsReducer} from "./todolist-reducer";
-import {string} from "prop-types";
+
 
 
 test('correct todolist should be removed', ()=>{
@@ -74,4 +74,22 @@ test ('correct todoList should change its name', () => {
 
     expect(endState[0].title).toBe('What to learn');
     expect(endState[1].title).toBe(action.payload.title)
+})
+
+test('correct filter for todoList should be changed', ()=>{
+    const todoListID1 = v1();
+    const todoListID2 = v1();
+
+    //1.Стартовый state
+    const startState: TodoListProps[] = [
+        {id: todoListID1, title: 'What to learn', filter: 'all'},
+        {id: todoListID2, title: 'What to buy', filter: 'all'},
+    ];
+
+    const action = {
+        type: 'CHANGE-TODOLIST-FILTER',
+        payload: {
+
+        }
+    }
 })
