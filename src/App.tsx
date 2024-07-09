@@ -32,6 +32,10 @@ export type TaskProps = {
     isDone: boolean
 }
 
+export type TasksType = {
+    [key: string]: TaskProps[]
+}
+
 export type TodoListProps = {
     id: string
     title: string
@@ -40,9 +44,7 @@ export type TodoListProps = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-export type TasksType = {
-    [key: string]: TaskProps[]
-}
+
 
 type ThemeMode = 'light' | 'dark';
 

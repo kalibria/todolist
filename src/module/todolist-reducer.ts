@@ -38,8 +38,8 @@ type ActionsType =
     | ChangeTodolistFilterActionType
 
 
-const todoListID1 = v1();
-const todoListID2 = v1();
+export const todoListID1 = v1();
+export const todoListID2 = v1();
 
 const initialState: TodoListProps[] = [
     {id: todoListID1, title: 'What to learn', filter: 'all'},
