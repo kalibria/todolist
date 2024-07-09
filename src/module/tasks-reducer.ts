@@ -15,13 +15,22 @@ export type TasksType = {
 export type AddTaskActionType = {
     type: 'ADD-TASK',
     payload: {
-        title: string
         todoListId: string
+        title: string
+    }
+}
+
+export type RemoveTaskActionType = {
+    type: 'REMOVE-TASK',
+    payload: {
+        todoListId: string,
+        taskId: string
     }
 }
 
 type ActionType =
 | AddTaskActionType
+| RemoveTaskActionType
 
 
 const initTasks: TasksType = {
@@ -53,6 +62,14 @@ export const tasksReducer = (state: TasksType = initTasks, action: ActionType): 
             }
             return state
         }
+        case 'REMOVE-TASK': {
+            return {
+                ...state,
+                [action.payload.todoListId]: state[action.payload.todoListId].filter(t => t.id !== action.payload.taskId)
+            }
+        }
+
+
         default:
             return state
     }
@@ -66,4 +83,14 @@ export const AddTaskAC = (todoListId: string, newTitle: string ) => {
             todoListId: todoListId
         }
     }as const
+}
+
+export const RemoveTaskAC = (todoListId: string, taskId: string) => {
+    return {
+        type: 'REMOVE-TASK',
+        payload: {
+            todoListId: todoListId,
+            taskId: taskId
+        }
+    } as const
 }
