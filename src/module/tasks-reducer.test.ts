@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTaskAC, RemoveTaskAC, tasksReducer, TasksType} from "./tasks-reducer";
+import {AddTaskAC, RemoveTaskAC, tasksReducer, TasksType, UpdateTaskStatusAC} from "./tasks-reducer";
 
 describe('task reducer', () => {
     let todoListID1: string;
@@ -44,5 +44,13 @@ describe('task reducer', () => {
 
         expect(endState[todoListID2].length).toBe(1)
     })
+
+    test('correct task should be updated status', () => {
+        const endState = tasksReducer(initTasks, UpdateTaskStatusAC(todoListID2, taskId2, true))
+
+        expect(endState[todoListID2][1].isDone).toBe(true)
+    })
+
+
 })
 

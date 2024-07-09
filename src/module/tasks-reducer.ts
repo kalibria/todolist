@@ -28,9 +28,19 @@ export type RemoveTaskActionType = {
     }
 }
 
+export type UpdateTaskActionType = {
+    type: 'UPDATE-TASK',
+    payload: {
+        todoListId: string,
+        taskId: string,
+        status: boolean
+    }
+}
+
 type ActionType =
 | AddTaskActionType
 | RemoveTaskActionType
+| UpdateTaskActionType
 
 
 const initTasks: TasksType = {
@@ -68,6 +78,11 @@ export const tasksReducer = (state: TasksType = initTasks, action: ActionType): 
                 [action.payload.todoListId]: state[action.payload.todoListId].filter(t => t.id !== action.payload.taskId)
             }
         }
+            case 'UPDATE-TASK': {
+                return {...state,
+                    [action.payload.todoListId]: state[action.payload.todoListId].map(t => t.id === action.payload.taskId ? {...t, isDone: action.payload.status} : t)
+                }
+            }
 
 
         default:
@@ -91,6 +106,17 @@ export const RemoveTaskAC = (todoListId: string, taskId: string) => {
         payload: {
             todoListId: todoListId,
             taskId: taskId
+        }
+    } as const
+}
+
+export const UpdateTaskStatusAC = (todoListId: string, taskId: string, status: boolean) => {
+    return {
+        type: 'UPDATE-TASK',
+        payload: {
+            todoListId: todoListId,
+            taskId: taskId,
+            status: status
         }
     } as const
 }
