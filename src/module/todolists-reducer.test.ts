@@ -37,17 +37,12 @@ test('correct todolist should be added', () => {
         {id: todoListID2, title: 'What to buy', filter: 'all'},
     ];
 
-    // const action = {
-    //     type: 'ADD-TODOLIST',
-    //     payload: {
-    //         title: 'New Todolist'
-    //     }
-    // } as const
 
-    const endState = todoListsReducer(startState, addTodoListAC());
+    const endState = todoListsReducer(startState, addTodoListAC('123','New title'));
 
     expect(endState.length).toBe(3);
-    expect(endState[2].title).toBe(addTodoListAC().payload.title);
+    expect(endState[2].title).toBe('New title');
+    expect(endState[2].id).toBe('123');
 } )
 
 test ('correct todoList should change its name', () => {

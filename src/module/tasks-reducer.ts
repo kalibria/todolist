@@ -1,5 +1,6 @@
 import {v1, v4} from "uuid";
 import {todoListID1, todoListID2} from "./todolist-reducer";
+import {FilterValuesType} from "../App";
 
 
 export type TaskProps = {
@@ -46,11 +47,28 @@ export type UpdateTaskStatusActionType = {
     }
 }
 
+export type ChangeFilterActionType = {
+    type: 'CHANGE-FILTER',
+    payload: {
+        todoListId: string,
+        filterValue: FilterValuesType
+    }
+}
+
+export type AddEmptyTasksForNewTodoList = {
+    type: 'ADD-TASKS-FOR-NEW-TODOLIST',
+    payload: {
+        todoListId: string,
+    }
+}
+
 type ActionType =
     | AddTaskActionType
     | RemoveTaskActionType
     | UpdateTaskStatusActionType
     | UpdateTaskTitleActionType
+    | ChangeFilterActionType
+    | AddEmptyTasksForNewTodoList
 
 
 const initTasks: TasksType = {
@@ -101,9 +119,16 @@ export const tasksReducer = (state: TasksType = initTasks, action: ActionType): 
         }
 
         case 'UPDATE-TASK-TITLE': {
-            return {...state,
-                [action.payload.todoListId]: state[action.payload.todoListId].map(el => el.id === action.payload.taskId ? {...el, title: action.payload.newTitle} : el)
+            return {
+                ...state,
+                [action.payload.todoListId]: state[action.payload.todoListId].map(el => el.id === action.payload.taskId ? {
+                    ...el,
+                    title: action.payload.newTitle
+                } : el)
             }
+        }
+        case 'ADD-TASKS-FOR-NEW-TODOLIST': {
+            return {...state, [action.payload.todoListId] : []}
         }
 
         default:
@@ -149,6 +174,15 @@ export const UpdateTaskTitleAC = (todoListId: string, taskId: string, newTitle: 
             todoListId: todoListId,
             taskId: taskId,
             newTitle: newTitle
+        }
+    } as const
+}
+
+export const AddTasksForNewTodoList = (todoListId: string) => {
+    return {
+        type: 'ADD-TASKS-FOR-NEW-TODOLIST',
+        payload: {
+            todoListId
         }
     } as const
 }
