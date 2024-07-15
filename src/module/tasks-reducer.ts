@@ -1,5 +1,5 @@
 import {v1, v4} from "uuid";
-import {todoListID1, todoListID2} from "./todolist-reducer";
+import {addTodoListAC, todoListID1, todoListID2} from "./todolist-reducer";
 import {FilterValuesType} from "../App";
 
 
@@ -13,39 +13,48 @@ export type TasksType = {
     [key: string]: TaskProps[]
 }
 
-export type AddTaskActionType = {
-    type: 'ADD-TASK',
-    payload: {
-        todoListId: string
-        title: string
-    }
-}
+// export type AddTaskActionType = {
+//     type: 'ADD-TASK',
+//     payload: {
+//         todoListId: string
+//         title: string
+//     }
+// }
 
-export type RemoveTaskActionType = {
-    type: 'REMOVE-TASK',
-    payload: {
-        todoListId: string,
-        taskId: string
-    }
-}
+export type AddTaskActionType = ReturnType<typeof AddTaskAC>
 
-export type UpdateTaskTitleActionType = {
-    type: 'UPDATE-TASK-TITLE',
-    payload: {
-        todoListId: string,
-        taskId: string,
-        newTitle: string
-    }
-}
+// export type RemoveTaskActionType = {
+//     type: 'REMOVE-TASK',
+//     payload: {
+//         todoListId: string,
+//         taskId: string
+//     }
+// }
 
-export type UpdateTaskStatusActionType = {
-    type: 'UPDATE-TASK-STATUS',
-    payload: {
-        todoListId: string,
-        taskId: string,
-        status: boolean
-    }
-}
+export type RemoveTaskActionType = ReturnType<typeof RemoveTaskAC>
+
+// export type UpdateTaskTitleActionType = {
+//     type: 'UPDATE-TASK-TITLE',
+//     payload: {
+//         todoListId: string,
+//         taskId: string,
+//         newTitle: string
+//     }
+// }
+
+export type UpdateTaskTitleActionType = ReturnType<typeof UpdateTaskTitleAC>
+
+// export type UpdateTaskStatusActionType = {
+//     type: 'UPDATE-TASK-STATUS',
+//     payload: {
+//         todoListId: string,
+//         taskId: string,
+//         status: boolean
+//     }
+// }
+
+export type UpdateTaskStatusActionType = ReturnType<typeof UpdateTaskStatusAC>
+
 
 export type ChangeFilterActionType = {
     type: 'CHANGE-FILTER',
@@ -54,6 +63,7 @@ export type ChangeFilterActionType = {
         filterValue: FilterValuesType
     }
 }
+
 
 export type AddEmptyTasksForNewTodoList = {
     type: 'ADD-TASKS-FOR-NEW-TODOLIST',
