@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import AppRedux from "./AppRedux";
+import {Provider} from "react-redux";
+import {store} from "./state/store";
+
+
 
 
 const root = ReactDOM.createRoot(
@@ -9,7 +14,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <Provider store={store}>
+          <AppRedux />
+      </Provider>
+
   </React.StrictMode>
 );
 

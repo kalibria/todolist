@@ -54,7 +54,7 @@ describe('task reducer', () => {
     test('correct task should be updated title', () => {
         const endState = tasksReducer(initTasks, UpdateTaskTitleAC(todoListID2, taskId2, 'Angular'))
 
-        expect(endState[todoListID2][1].title).toBe('Angular')
+        expect(endState[todoListID2][1].title).toBe('Angular ')
     })
 
 
