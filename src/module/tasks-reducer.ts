@@ -1,5 +1,5 @@
 import {v1, v4} from "uuid";
-import {addTodoListAC, todoListID1, todoListID2} from "./todolist-reducer";
+import {addTodoListAC, AddTodolistActionType, todoListID1, todoListID2} from "./todolist-reducer";
 import {FilterValuesType} from "../App";
 
 
@@ -79,6 +79,7 @@ type ActionType =
     | UpdateTaskTitleActionType
     | ChangeFilterActionType
     | AddEmptyTasksForNewTodoList
+    | AddTodolistActionType
 
 
 const initTasks: TasksType = {
@@ -138,7 +139,7 @@ export const tasksReducer = (state: TasksType = initTasks, action: ActionType): 
             }
         }
         case 'ADD-TASKS-FOR-NEW-TODOLIST': {
-            return {...state, [action.payload.todoListId] : []}
+            return {...state, [action.payload.todoListId]: []}
         }
 
         default:
