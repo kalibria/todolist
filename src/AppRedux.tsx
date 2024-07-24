@@ -1,13 +1,11 @@
-import React, {useReducer, useState} from 'react';
+import React, { useState} from 'react';
 import './App.css';
-import {v1, v4} from 'uuid';
-import {Todolist} from "./components/todoList/Todolist";
+import {v1} from 'uuid';
 import {AddItemForm} from "./components/addItemForm/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -19,21 +17,13 @@ import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
 import {
     addTodoListAC,
-    filterTodoListAC,
-    removeTodoListAC,
-    todoListsReducer,
-    updateTodoListAC
 } from "./state/todolist-reducer";
 import {
-    AddTaskAC,
     AddTasksForNewTodoList,
-    RemoveTaskAC,
-    tasksReducer,
-    UpdateTaskStatusAC,
-    UpdateTaskTitleAC
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {TodolistRedux} from "./components/todoList/TodolistRedux";
 
 
 export type TaskProps = {
@@ -58,38 +48,9 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 type ThemeMode = 'light' | 'dark';
 
 function AppRedux() {
-    const todoListID1 = v1();
-    const todoListID2 = v1();
-
     let todoList = useSelector<AppRootStateType, Array<TodoListProps>>(state => state.todoLists)
 
-    let tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
-
     const dispatch = useDispatch()
-
-
-    let [enteredTask, setEnteredTask] = useState('');
-
-    const removeTask = (taskId: string, todoListId: string) => {
-        dispatch(RemoveTaskAC(todoListId, taskId))
-    }
-
-    const addTask = (title: string, todoListId: string) => {
-        dispatch(AddTaskAC(todoListId, title))
-    }
-
-    const changeFilter = (filter: FilterValuesType, todoListId: string) => {
-        dispatch(filterTodoListAC(todoListId, filter))
-    }
-
-
-    const changeTaskStatus = (taskId: string, status: boolean, todoListId: string) => {
-        dispatch(UpdateTaskStatusAC(todoListId, taskId, status))
-    }
-
-    const removeTodoList = (todoListId: string) => {
-        dispatch(removeTodoListAC(todoListId))
-    }
 
     const addTodoList = (title: string) => {
         const newId = v1();
@@ -97,13 +58,6 @@ function AppRedux() {
         dispatch(AddTasksForNewTodoList(newId))
     };
 
-    const changeTaskTitle = (todoListId: string, taskId: string, newTitle: string) => {
-        dispatch(UpdateTaskTitleAC(todoListId, taskId, newTitle))
-    }
-
-    const changeTodoListTitle = (todoListId: string, newTitle: string) => {
-        dispatch(updateTodoListAC(todoListId, newTitle))
-    }
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light');
 
@@ -112,16 +66,7 @@ function AppRedux() {
             mode: themeMode === 'light' ? 'dark' : 'light',
             primary: {
                 main: '#FF5733',
-                // light: will be calculated from palette.primary.main,
-                // dark: will be calculated from palette.primary.main,
-                // contrastText: will be calculated to contrast with palette.primary.main
             },
-            // secondary: {
-            //     main: '#E0C2FF',
-            //     light: '#F5EBFF',
-            //     // dark: will be calculated from palette.secondary.main,
-            //     contrastText: '#47008F',
-            // },
         },
     });
 
@@ -163,26 +108,12 @@ function AppRedux() {
                     </Grid>
                     <Grid container sx={{mt: '20px'}}>
                         {todoList.map(t => {
-
                                 return (
-                                    <Grid item sx={{mr: '30px'}}>
+                                    <Grid item sx={{mr: '30px'}} key={t.id}>
                                         <Paper elevation={3} sx={{p: '10px'}}>
-                                            <Todolist
-                                                key={t.id}
-                                                title={t.title}
-                                                tasks={tasks}
+                                            <TodolistRedux
                                                 todoList={t}
-                                                data={'27.05.2024'}
-                                                removeTask={removeTask}
-                                                changeFilter={changeFilter}
-                                                addTask={addTask}
-                                                enteredTask={enteredTask}
-                                                changeTaskStatus={changeTaskStatus}
-                                                filter={t.filter}
-                                                todoListId={t.id}
-                                                deleteTodoList={removeTodoList}
-                                                changeTaskTitle={changeTaskTitle}
-                                                changeTodoListTitle={changeTodoListTitle}
+                                                 // data={'27.05.2024'}
                                             />
                                         </Paper>
                                     </Grid>
