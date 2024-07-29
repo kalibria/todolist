@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
 import {v1} from 'uuid';
 import {AddItemForm} from "./components/addItemForm/AddItemForm";
@@ -52,11 +52,11 @@ function AppRedux() {
 
     const dispatch = useDispatch()
 
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         const newId = v1();
         dispatch(addTodoListAC(newId, title))
         dispatch(AddTasksForNewTodoList(newId))
-    };
+    },[]);
 
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light');
