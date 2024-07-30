@@ -1,12 +1,11 @@
-import React, {ChangeEvent, useState} from "react";
-import {AddItemForm} from "../addItemForm/AddItemForm";
+import React, {ChangeEvent, memo, useState} from "react";
 
 type EditableSpanProps = {
     oldTitle: string;
     changeItem:(newTitle:string) =>void
 }
 
-export const EditableSpan = ({oldTitle, changeItem}: EditableSpanProps) => {
+export const EditableSpan = memo(({oldTitle, changeItem}: EditableSpanProps) => {
     const [editMode, setEditMode] = useState(false);
     const [newTitle, setNewTitle]  = useState(oldTitle)
     const changeEditMode = () => {
@@ -26,4 +25,4 @@ export const EditableSpan = ({oldTitle, changeItem}: EditableSpanProps) => {
             <input value={newTitle} onBlur={changeEditMode} autoFocus={true} onChange={changeTitleHandler}/>
             : <span onDoubleClick={changeEditMode}>{oldTitle}</span>
     )
-}
+})

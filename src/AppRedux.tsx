@@ -56,7 +56,7 @@ function AppRedux() {
         const newId = v1();
         dispatch(addTodoListAC(newId, title))
         dispatch(AddTasksForNewTodoList(newId))
-    },[]);
+    },[dispatch]);
 
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light');
