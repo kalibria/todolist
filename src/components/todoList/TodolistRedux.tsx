@@ -16,6 +16,8 @@ import {AppRootStateType} from "../../state/store";
 import {filterTodoListAC, removeTodoListAC, updateTodoListAC} from "../../state/todolist-reducer";
 import {AddTaskAC} from "../../state/tasks-reducer";
 import {Task} from "../task/task";
+import {tasksSelector} from "../../state/selectors";
+
 
 type TodolistProps = {
     todoList: TodoListProps
@@ -24,7 +26,7 @@ type TodolistProps = {
 
 export const TodolistRedux = memo(({todoList}: TodolistProps) => {
     let {id, title, filter} = todoList
-    let tasks = useSelector<AppRootStateType, Array<TaskProps>>(state => state.tasks[id])
+    let tasks = useSelector<AppRootStateType, Array<TaskProps>>(state => tasksSelector(state, id))
 
     const dispatch = useDispatch();
 

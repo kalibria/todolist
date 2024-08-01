@@ -22,8 +22,9 @@ import {
     AddTasksForNewTodoList,
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
 import {TodolistRedux} from "./components/todoList/TodolistRedux";
+import {todolistSelector} from "./state/selectors";
+
 
 
 export type TaskProps = {
@@ -48,7 +49,7 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 type ThemeMode = 'light' | 'dark';
 
 function AppRedux() {
-    let todoList = useSelector<AppRootStateType, Array<TodoListProps>>(state => state.todoLists)
+    let todoList = useSelector(todolistSelector)
 
     const dispatch = useDispatch()
 
