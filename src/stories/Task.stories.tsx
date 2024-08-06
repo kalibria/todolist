@@ -3,6 +3,8 @@ import {Task} from "../components/task/task";
 import {Provider} from "react-redux";
 import {store} from "../state/store";
 import React, {useState} from "react";
+import AppRedux from "../AppRedux";
+import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -22,15 +24,9 @@ const meta = {
         todolistId: 'fgdosrg8rgjuh'
     },
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    // decorators: [
-    //     (Story) => (
-    //         <Provider store={store}>
-    //             <BrowserRouter>
-    //                 <Story />
-    //             </BrowserRouter>
-    //         </Provider>
-    //     ),
-    // ],
+    decorators: [
+        ReduxStoreProviderDecorator
+    ],
 
 } satisfies Meta<typeof Task>;
 
@@ -49,6 +45,7 @@ export const TaskIsDoneStory: Story = {
 
 export const TaskToggleStory: Story = {
     render: () => {
+
         const [task, setTask] = useState({id: '12wsdewfijdei', title: 'JS', isDone: false})
         return <Task task={task} todolistId={'12wsdewfijdei2343' }/>
     }
