@@ -8,7 +8,7 @@ import {filterButtonsContainerSx} from "../../styles/TodoList.styles";
 
 
 
-type AddItemType = {
+export type AddItemType = {
     addItem: (title: string) => void
 }
 
